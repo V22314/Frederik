@@ -1,0 +1,117 @@
+[
+    {
+        "id": "6b202282926127af",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5c05b2cd45ca3cc2",
+        "type": "mqtt out",
+        "z": "6b202282926127af",
+        "name": "",
+        "topic": "aams/frederik/UR",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "1e6d7f61ee133a52",
+        "x": 630,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "cbcab2e0e339acd0",
+        "type": "inject",
+        "z": "6b202282926127af",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 370,
+        "y": 240,
+        "wires": [
+            [
+                "5c05b2cd45ca3cc2"
+            ]
+        ]
+    },
+    {
+        "id": "6ec8ccefbf55e7e4",
+        "type": "inject",
+        "z": "6b202282926127af",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 370,
+        "y": 300,
+        "wires": [
+            [
+                "5c05b2cd45ca3cc2"
+            ]
+        ]
+    },
+    {
+        "id": "1e6d7f61ee133a52",
+        "type": "mqtt-broker",
+        "name": "test.mosquitto.org",
+        "broker": "test.mosquitto.org",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]

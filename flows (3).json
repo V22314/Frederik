@@ -1,0 +1,80 @@
+[
+    {
+        "id": "2ea861c8c2bed255",
+        "type": "tab",
+        "label": "Flow 4",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5a424cd77cab2a9e",
+        "type": "http request",
+        "z": "2ea861c8c2bed255",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.energidataservice.dk/dataset/DeclarationProduction?start=2022-05-01&end=2022-06-01&filter={\"PriceArea\":[\"DK1\"]}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 270,
+        "y": 160,
+        "wires": [
+            [
+                "ec77d42947d60b1d"
+            ]
+        ]
+    },
+    {
+        "id": "60d138f0dc433029",
+        "type": "inject",
+        "z": "2ea861c8c2bed255",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 80,
+        "y": 160,
+        "wires": [
+            [
+                "5a424cd77cab2a9e"
+            ]
+        ]
+    },
+    {
+        "id": "ec77d42947d60b1d",
+        "type": "debug",
+        "z": "2ea861c8c2bed255",
+        "name": "debug 15",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 140,
+        "wires": []
+    }
+]
