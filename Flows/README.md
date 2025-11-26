@@ -18,7 +18,7 @@ Tryk: Bytes 0-1 → konverteres til bar (delt med 100)
 Temperatur: Bytes 2-3 eller 4-5 → konverteres til °C (delt med 10 eller 100 afhængig af port)
 Output er et struktureret objekt med alle sensordata
 3. Første formatering (Function 2)
-Plucker trykverdier ud fra alle kilder
+Plukker trykværdier ud fra alle kilder
 Navngiver dem Sensor 1 til Sensor 9
 Tilføjer TSensor 2 og TSensor 4 (temperaturdata fra specifikke sensorer)
 4. Sensor-opdeling (Functions 3-11)
@@ -26,7 +26,7 @@ Hver funktion ekstrakter én sensor ad gangen:
 
 Sætter msg.topic til sensornavnet (fx "Sensor 1")
 Sætter msg.payload til værdien
-Sikrer at null/undefined bliver til 0
+
 
 5. Dashboard visualisering
 Data sendes til UI Charts:
