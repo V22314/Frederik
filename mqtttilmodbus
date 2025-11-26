@@ -1,0 +1,75 @@
+import time
+from threading import Thread
+import paho.mqtt.client as mqtt
+from pymodbus.server import StartTcpServer
+from pymodbus.datastore import ModbusSlaveContext, ModbusServerContext, ModbusSequentialDataBlock
+
+# -------------------------------
+# Modbus setup (pymodbus 3.0.2)
+# -------------------------------
+store = ModbusSlaveContext(
+    hr=ModbusSequentialDataBlock(0, [0]*100),
+    di=ModbusSequentialDataBlock(0, [0]*100),
+    co=ModbusSequentialDataBlock(0, [0]*100),
+    ir=ModbusSequentialDataBlock(0, [0]*100)
+)
+context = ModbusServerContext(slaves=store, single=True)
+
+def run_modbus_server():
+    print("Starter Modbus server på port 5020...")
+    # context som keyword-argument
+    StartTcpServer(context=context, address=("0.0.0.0", 5020))
+
+# Start Modbus server i en separat tråd
+Thread(target=run_modbus_server, daemon=True).start()
+
+# -------------------------------
+# MQTT setup
+# -------------------------------
+BROKER = "test.mosquitto.org"
+PORT = 1883
+TOPIC = "aams/frederik/UR"
+
+def on_connect(client, userdata, flags, rc):
+    if rc == 0:
+        print("Forbundet til MQTT broker!")
+        client.subscribe(TOPIC)
+    else:
+        print("Forbindelse fejlede, kode:", rc)
+
+def on_message(client, userdata, msg):
+    try:
+        payload = msg.payload.decode().lower()  # lowercase for sikkerhed
+        print(f"Topic: {msg.topic} | Payload: {payload}")
+
+        # Håndter boolean strings
+        if payload == "true":
+            value = 1.0
+        elif payload == "false":
+            value = 0.0
+        else:
+            # Forsøg at konvertere til float
+            value = float(payload)
+
+        # Gem i holding register 0 (x100)
+        store.setValues(3, 0, [int(value*100)])
+        print(f"Værdien {value} gemt i Modbus register 0")
+
+    except Exception as e:
+        print("Fejl ved MQTT->Modbus konvertering:", e)
+
+# Opret MQTT client
+client = mqtt.Client()
+client.on_connect = on_connect
+client.on_message = on_message
+
+client.connect(BROKER, PORT, 60)
+client.loop_start()
+
+# Hold scriptet kørende
+try:
+    while True:
+        time.sleep(1)
+except KeyboardInterrupt:
+    print("Stopper MQTT og Modbus...")
+    client.loop_stop()
